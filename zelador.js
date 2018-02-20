@@ -182,68 +182,52 @@ javascript:(function(){
 		});
 	}
 	
-	function cleanHN() {
-		document.body.innerHTML = '<p>Pera aí</p>';
+	function cleanHN() {		
+		let _hnMain = document.getElementById('hnmain');
+		_hnMain.style.width = '700px';
+		_hnMain.style.border = '1px solid rgba(255, 102, 0, .3)';
 		
-		Promise.all([
-			fetch('https://news.ycombinator.com/news').then(r => r.text()),
-			fetch('https://news.ycombinator.com/news?p=2').then(r => r.text()).then(r => r.replace(/hnmain/, 'hnmainp2')),
-			fetch('https://news.ycombinator.com/news?p=3').then(r => r.text()).then(r => r.replace(/hnmain/, 'hnmainp3'))
-		])
-		.then(results => {
-			let _hnMain = document.getElementById('hnmain');
-			_hnMain.style.width = '700px';
-			_hnMain.style.border = '1px solid rgba(255, 102, 0, .3)';
-			
-			let _hnMainp2 = document.getElementById('hnmainp2');
-			_hnMainp2.style.display = 'none';
-			
-			let _hnMainp3 = document.getElementById('hnmainp3');
-			_hnMainp3.style.display = 'none';
-			
-			let _body = document.body;
-			_body.innerHTML = results[0];
-			_body.innerHTML += results[1];
-			_body.innerHTML += results[2];
-			_body.innerHTML = document.body.innerHTML.replace(/\|/g, '·');
-			_body.style.backgroundColor = 'rgb(251, 251, 251)';
-			
-			[
-				'.sitebit',
-				'.athing .rank',
-				'.score',
-				'.age',
-				'.morelink',
-				'a[href^=newest]',
-				'a[href^=threads]',
-				'a[href^=newcomments]',
-				'a[href^=show]',
-				'a[href^=ask]',
-				'a[href^=jobs]',
-				'#logout',
-				'form[method=get]',
-				'.yclinks',
-				'table>tbody>tr>td>img+table+br',
-				'table>tbody>tr>td>img+table+br+center',
-				'table>tbody>tr>td>img+table+br+center+br',			
-				'table>tbody>tr>td>img+table+br+center+br+center',			
-			].forEach((item) => {
-				[].forEach.call(document.querySelectorAll(item), (c) => {
-					c.style.display = 'none';
-				});
+		let _body = document.body;
+		_body.innerHTML = _body.innerHTML.replace(/\|/g, '·');
+		_body.style.backgroundColor = 'rgb(251, 251, 251)';
+		
+		document.body.style.display = 'block';
+		
+		[
+			'.sitebit',
+			'.athing .rank',
+			'.score',
+			'.age',
+			'.morelink',
+			'a[href^=newest]',
+			'a[href^=threads]',
+			'a[href^=newcomments]',
+			'a[href^=show]',
+			'a[href^=ask]',
+			'a[href^=jobs]',
+			'#logout',
+			'form[method=get]',
+			'.yclinks',
+			'table>tbody>tr>td>img+table+br',
+			'table>tbody>tr>td>img+table+br+center',
+			'table>tbody>tr>td>img+table+br+center+br',			
+			'table>tbody>tr>td>img+table+br+center+br+center',			
+		].forEach((item) => {
+			[].forEach.call(document.querySelectorAll(item), (c) => {
+				c.style.display = 'none';
 			});
-			
-			[].forEach.call(document.querySelectorAll('.athing .votelinks'), (c) => {
-				c.style.padding = '0 5px';
-			});
-			
-			[].forEach.call(document.querySelectorAll('.spacer'), (c) => {
-				c.style.height = '10px';
-			});
-			
-			[].forEach.call(document.querySelectorAll('.pagetop'), (clazz) => {
-				clazz.innerHTML = clazz.innerHTML.replace(/·/g, "");
-			});	
 		});
+		
+		[].forEach.call(document.querySelectorAll('.athing .votelinks'), (c) => {
+			c.style.padding = '0 5px';
+		});
+		
+		[].forEach.call(document.querySelectorAll('.spacer'), (c) => {
+			c.style.height = '10px';
+		});
+		
+		[].forEach.call(document.querySelectorAll('.pagetop'), (clazz) => {
+			clazz.innerHTML = clazz.innerHTML.replace(/·/g, "");
+		});	
 	}
 }());
