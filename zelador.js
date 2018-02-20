@@ -1,13 +1,21 @@
 javascript:(function(){
-	const JIRA_ALTERDATA = "jira.alterdata.com.br";
+	const JIRA = "jira.alterdata.com.br";
+	const WEBMAIL = "webmail.alterdata.com.br";
 	const PHYS_ORG = "phys.org";
+	const HN = "news.ycombinator.com";
 	
 	switch(location.host) {
-		case JIRA_ALTERDATA: 
+		case JIRA: 
 			cleanIssueJira();
+			break;
+		case WEBMAIL:
+			cleanWebmail();
 			break;
 		case PHYS_ORG:
 			cleanPhysOrg();
+			break;		
+		case HN:
+			cleanHN();
 			break;
 	}
 	
@@ -165,5 +173,59 @@ javascript:(function(){
 			_stories[0].style.margin = '0 auto';
 		}
 	}
+	
+	function cleanWebmail() {
+		[].forEach.call(document.querySelectorAll('.tableRow'), (row, index) => {
+		  if (index < 100) return;
 
+		  row.style.display = 'none';
+		})
+	}
+	
+	function cleanHN() {
+		let _hnMain = document.getElementById('hnmain');
+		_hnMain.style.width = '700px';
+		_hnMain.style.border = '1px solid rgba(255, 102, 0, .3)';
+		
+		let _body = document.body;
+		_body.innerHTML = document.body.innerHTML.replace(/\|/g, '·');
+		_body.style.backgroundColor = 'rgb(251, 251, 251)';
+		
+		[
+			'.sitebit',
+			'.athing .rank',
+			'.score',
+			'.age',
+			'.morelink',
+			'a[href^=newest]',
+			'a[href^=threads]',
+			'a[href^=newcomments]',
+			'a[href^=show]',
+			'a[href^=ask]',
+			'a[href^=jobs]',
+			'#logout',
+			'form[method=get]',
+			'.yclinks',
+			'table>tbody>tr>td>img+table+br',
+			'table>tbody>tr>td>img+table+br+center',
+			'table>tbody>tr>td>img+table+br+center+br',			
+			'table>tbody>tr>td>img+table+br+center+br+center',			
+		].forEach((item) => {
+			[].forEach.call(document.querySelectorAll(item), (c) => {
+				c.style.display = 'none';
+			});
+		});
+		
+		[].forEach.call(document.querySelectorAll('.athing .votelinks'), (c) => {
+			c.style.padding = '0 5px';
+		});
+		
+		[].forEach.call(document.querySelectorAll('.spacer'), (c) => {
+			c.style.height = '10px';
+		});
+		
+		[].forEach.call(document.querySelectorAll('.pagetop'), (clazz) => {
+			clazz.innerHTML = clazz.innerHTML.replace(/·/g, "");
+		});
+	}
 }());
